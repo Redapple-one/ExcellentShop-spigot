@@ -1,46 +1,37 @@
-# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-maven
-
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
+# This workflow will build a Java project with Maven
+# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
 
 name: Java CI with Maven
 
 on:
   push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
+    branches: [ master ]
 
 jobs:
   build:
 
     runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        java-version: [11, 16, 17]
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Set up JDK 17
-      uses: actions/setup-java@v4
+    - uses: actions/checkout@v3
+    - name: Set up JDK
+      uses: actions/setup-java@v3
       with:
-        java-version: '17'
-        distribution: 'temurin'
-        cache: maven
-    - name: Install Skript dependency
-      run: |-
-          cd ./core
-          mvn install:install-file \
-            -Dfile=AdvancedRegionMarket-3.5.3.jar \
-            -DpomFile=AdvancedRegionMarket-3.5.3.pom \
-            -DgroupId=net.alex9849.arm \
-            -DartifactId=AdvancedRegionMarket \
-            -Dversion=3.5.3 \
-            -Dpackaging=jar
-          cd ..
+        distribution: 'corretto'
+        java-version: 17
+    - name: List files
+      run: ls -R
+    - name: Install BungeeChatApi locally
+      run: |
+        mvn install:install-file \
+          -Dfile=core/bungeecord/BungeeChatApi-2.2.3.1241.jar \
+          -DgroupId=dev.aura.bungeechat.api \
+          -DartifactId=BungeeChatApi \
+          -Dversion=2.2.3.1241 \
+          -Dpackaging=jar
     - name: Build with Maven
       run: mvn -B package --file pom.xml
-
-    # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
-    - name: Update dependency graph
-      uses: advanced-security/maven-dependency-submission-action@571e99aab1055c2e71a1e2309b9691de18d6b7d6
