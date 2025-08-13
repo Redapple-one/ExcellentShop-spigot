@@ -28,7 +28,7 @@ jobs:
     - name: Install BungeeChatApi locally
       run: |
         mvn install:install-file \
-          -Dfile=core/bungeecord/BungeeChatApi-2.2.3.1241.jar \
+          -Dfile=./Core/bungeecord/BungeeChatApi-2.2.3.1241.jar \
           -DgroupId=dev.aura.bungeechat.api \
           -DartifactId=BungeeChatApi \
           -Dversion=2.2.3.1241 \
