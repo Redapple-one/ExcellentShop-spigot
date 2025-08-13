@@ -28,8 +28,8 @@ jobs:
     - name: Install BungeeChatApi locally
       run: |
         mvn install:install-file \
-          -Dfile=Core/AdvancedRegionMarket-3.5.3.jar \
-          -DpomFile=Core/AdvancedRegionMarket-3.5.3.pom \
+          -Dfile=Core/advancedregionmarket-3.5.3.jar \
+          -DpomFile=Core/advancedregionmarket-3.5.3.pom \
           -DgroupId=net.alex9849.arm \
           -DartifactId=AdvancedRegionMarket \
           -Dversion=3.5.3 \
