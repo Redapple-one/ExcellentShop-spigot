@@ -27,6 +27,17 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
+    - name: Install Skript dependency
+      run: |-
+          cd /core
+          mvn install:install-file \
+            -Dfile=AdvancedRegionMarket-3.5.3.jar \
+            -DpomFile=AdvancedRegionMarket-3.5.3.pom \
+            -DgroupId=net.alex9849.arm \
+            -DartifactId=AdvancedRegionMarket \
+            -Dversion=3.5.3 \
+            -Dpackaging=jar
+          cd ..
     - name: Build with Maven
       run: mvn -B package --file pom.xml
 
